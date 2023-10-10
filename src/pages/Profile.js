@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { capitalizeFirstLetter, typeHandler } from '../utils';
 
-function Profile({pokemonData, error, setError}) {
+function Profile({pokemonData, error}) {
     const {pokemonname} = useParams(); // Obtém o nome do Pokémon da URL
     const [pokemonProfile, setPokemonProfile] = useState();
     const [isLoading, setIsLoading] = useState(true);
+    const [errorProfile, setErrorProfile] = useState(null);
     
     useEffect(() => {
         const findPokemonByName = (nameToFind) => {
@@ -17,26 +18,30 @@ function Profile({pokemonData, error, setError}) {
             return null;
         }
         const foundProfile = findPokemonByName(pokemonname);
-        if (foundProfile) {
-            setPokemonProfile(foundProfile);
+        if (error) {
+            setErrorProfile(error);
             setIsLoading(false);
+            setPokemonProfile();
         } else if (!foundProfile && pokemonData.length > 0) {
             setIsLoading(false);
-            setError(`Erro ao encontrar Pokémon ${pokemonname}`);
-        } else {
+            setErrorProfile(`Erro ao encontrar Pokémon ${pokemonname}`);
             setPokemonProfile();
+        } else if (foundProfile) {
+            setPokemonProfile(foundProfile);
+            setIsLoading(false);
+            setErrorProfile(null);
         }
     }, [pokemonname, pokemonData]);
 
     // Renderiza a página do Pokémon com base nos dados recebidos
     return (
         <>
-            {error && (
+            {errorProfile && (
                 <section className="flex flex-col items-center bg-white py-20 px-6 md:rounded-md md:shadow-md md:my-10 lg:w-3/5 2xl:w-2/5">
                     <Link className="text-center bg-slate-100 rounded-full border px-6 py-4 hover:bg-slate-50 transition" to={`/`}>
-                        Voltar para a página inicial
+                        Go Back To Home
                     </Link>
-                    <p className="text-red-500 mt-16">{error}</p>
+                    <p className="text-red-500 mt-16">{errorProfile}</p>
                 </section>
             )}
             {isLoading && (
@@ -84,9 +89,7 @@ function Profile({pokemonData, error, setError}) {
                 </section>
             )}
         </>
-
     )       
-    
 }
 
 export default Profile;

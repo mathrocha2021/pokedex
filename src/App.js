@@ -48,7 +48,7 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home pokemonData={pokemonData} error={error} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />} />
-            <Route path={`/pokemon/:pokemonname`} element={<Profile pokemonData={pokemonData} error={error} setError={setError} />} />
+            <Route path={`/pokemon/:pokemonname`} element={<Profile pokemonData={pokemonData} error={error} />} />
           </Routes>
         </BrowserRouter>
       </div>

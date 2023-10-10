@@ -58,8 +58,6 @@ function Home({ pokemonData, error, searchTerm, setSearchTerm }) {
                 )
             }
         </>
-
-
     );}
 
     export default Home;
