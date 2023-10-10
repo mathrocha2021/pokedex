@@ -19,14 +19,17 @@ function Profile({pokemonData, error}) {
         }
         const foundProfile = findPokemonByName(pokemonname);
         if (error) {
+            // Se houver um erro global, define o erro do perfil e interrompe o carregamento
             setErrorProfile(error);
             setIsLoading(false);
             setPokemonProfile();
         } else if (!foundProfile && pokemonData.length > 0) {
+            // Se não encontrar o perfil do Pokémon e houver dados disponíveis, define um erro e interrompe o carregamento
             setIsLoading(false);
             setErrorProfile(`Erro ao encontrar Pokémon ${pokemonname}`);
             setPokemonProfile();
         } else if (foundProfile) {
+            // Se encontrar o perfil do Pokémon, define o perfil, interrompe o carregamento e limpa qualquer erro anterior
             setPokemonProfile(foundProfile);
             setIsLoading(false);
             setErrorProfile(null);

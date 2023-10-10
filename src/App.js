@@ -29,11 +29,15 @@ function App() {
               const pokemonArray = res.map((res) => res.data);
               // Define o estado com o array de dados dos Pokémon
               setPokemonData(pokemonArray);
+              // Limpa qualquer erro anterior que possa ter ocorrido
               setError(null);
           })
           .catch((error) => {
+              //Atualiza o estado com a mensagem de erro
               setError("Erro ao buscar dados dos Pokémons.");
+              //Limpo o estado para que não contenha dados incorretos ou antigos em caso de erro
               setPokemonData([]);
+              //Registra o erro ocorrido no console do navegador
               console.error(error);
           });
   };
